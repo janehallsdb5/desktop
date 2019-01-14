@@ -11,7 +11,6 @@ import { Repository } from '../../models/repository'
 import { PopupType } from '../../models/popup'
 import { ShellError } from '../shells'
 import { UpstreamAlreadyExistsError } from '../stores/upstream-already-exists-error'
-import { FetchType } from '../../models/fetch'
 import { TipState } from '../../models/tip'
 
 /** An error which also has a code property. */
@@ -240,10 +239,9 @@ export async function pushNeedsPullHandler(
     return error
   }
 
-  // Since they need to pull, go ahead and do a fetch for them.
-  dispatcher.fetch(repository, FetchType.UserInitiatedTask)
+  dispatcher.showPopup({ type: PopupType.PushNeedsPull, repository })
 
-  return error
+  return null
 }
 
 /**
