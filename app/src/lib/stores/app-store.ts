@@ -181,6 +181,7 @@ import {
   updateConflictState,
 } from './updates/changes-state'
 import { ManualConflictResolution } from '../../models/manual-conflict-resolution'
+import { getPreferredLabels } from '../preferred-menu-labels'
 
 /**
  * As fast-forwarding local branches is proportional to the number of local
@@ -1444,16 +1445,24 @@ export class AppStore extends TypedBaseStore<IAppState> {
    * Update menu labels for editor, shell, and pull requests.
    */
   private updateMenuItemLabels(repository?: Repository) {
-    const editorLabel = this.selectedExternalEditor
-      ? `Open in ${this.selectedExternalEditor}`
-      : undefined
+    const branchesState = this.getBranchesState(repository)
 
-    updatePreferredAppMenuItemLabels({
-      editorLabel: editorLabel,
-      pullRequestLabel: this.getPullRequestLabel(repository),
-      shellLabel: `Open in ${this.selectedShell}`,
-      defaultBranchName: this.getDefaultBranchName(repository),
+    let defaultBranch: Branch | null = null
+    let currentPullRequest: PullRequest | null = null
+
+    if (branchesState != null) {
+      defaultBranch = branchesState.defaultBranch
+      currentPullRequest = branchesState.currentPullRequest
+    }
+
+    const labelParameters = getPreferredLabels({
+      selectedExternalEditor: this.selectedExternalEditor,
+      selectedShell: this.selectedShell,
+      defaultBranch,
+      currentPullRequest,
     })
+
+    updatePreferredAppMenuItemLabels(labelParameters)
   }
 
   private getBranchesState(repository?: Repository) {
@@ -1463,32 +1472,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     const state = this.repositoryStateCache.get(repository)
     return state.branchesState
-  }
-
-  private getPullRequestLabel(repository?: Repository) {
-    const branchesState = this.getBranchesState(repository)
-    if (branchesState == null) {
-      return undefined
-    }
-
-    if (branchesState.currentPullRequest === null) {
-      return undefined
-    }
-
-    return __DARWIN__ ? 'Show Pull Request' : 'Show &pull request'
-  }
-
-  private getDefaultBranchName(repository?: Repository) {
-    const branchesState = this.getBranchesState(repository)
-    if (branchesState == null) {
-      return undefined
-    }
-
-    const { defaultBranch } = branchesState
-    if (defaultBranch == null || defaultBranch.upstreamWithoutRemote == null) {
-      return undefined
-    }
-    return defaultBranch.upstreamWithoutRemote
   }
 
   private updateRepositorySelectionAfterRepositoriesChanged() {
