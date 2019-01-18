@@ -1,7 +1,6 @@
 import { getPreferredLabels } from '../../src/lib/preferred-menu-labels'
-import { Shell as MacOSShell } from '../../src/lib/shells/darwin'
-import { Shell as WindowShell } from '../../src/lib/shells/win32'
-import { Shell as LinuxShell } from '../../src/lib/shells/linux'
+import { Shell } from '../../src/lib/shells/win32'
+import { ExternalEditor } from '../../src/lib/editors/win32'
 
 describe('getPreferredLabels', () => {
   const baseParameters = {
@@ -32,7 +31,7 @@ describe('getPreferredLabels', () => {
     })
   })
 
-  describe('editorLabel', () => {
+  describe('shellLabel', () => {
     const baseParameters = {
       currentPullRequest: null,
       defaultBranch: null,
@@ -47,31 +46,38 @@ describe('getPreferredLabels', () => {
       expect(actual.shellLabel).toBeUndefined()
     })
 
-    it('can render a macOS entry', () => {
+    it('can render shell label with spaces', () => {
       const actual = getPreferredLabels({
         ...baseParameters,
-        selectedShell: MacOSShell.iTerm2,
-      })
-
-      expect(actual.shellLabel).toBe('Open in iTerm2')
-    })
-
-    it('can render a Windows shell', () => {
-      const actual = getPreferredLabels({
-        ...baseParameters,
-        selectedShell: WindowShell.GitBash,
+        selectedShell: Shell.GitBash,
       })
 
       expect(actual.shellLabel).toBe('Open in Git Bash')
     })
+  })
 
-    it('can render a Windows shell', () => {
+  describe('editorLabel', () => {
+    const baseParameters = {
+      currentPullRequest: null,
+      defaultBranch: null,
+      showRepositoryRemoveDialog: false,
+    }
+
+    it('returns undefined by default', () => {
       const actual = getPreferredLabels({
         ...baseParameters,
-        selectedShell: LinuxShell.Konsole,
       })
 
-      expect(actual.shellLabel).toBe('Open in Konsole')
+      expect(actual.editorLabel).toBeUndefined()
+    })
+
+    it('can render a editor option', () => {
+      const actual = getPreferredLabels({
+        ...baseParameters,
+        selectedExternalEditor: ExternalEditor.SublimeText,
+      })
+
+      expect(actual.editorLabel).toBe('Open in Sublime Text')
     })
   })
 })
