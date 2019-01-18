@@ -1445,33 +1445,31 @@ export class AppStore extends TypedBaseStore<IAppState> {
    * Update menu labels for editor, shell, and pull requests.
    */
   private updateMenuItemLabels(repository?: Repository) {
-    const branchesState = this.getBranchesState(repository)
-
     let defaultBranch: Branch | null = null
     let currentPullRequest: PullRequest | null = null
 
-    if (branchesState != null) {
+    if (repository != null && repository.gitHubRepository !== null) {
+      const state = this.repositoryStateCache.get(repository)
+      const { branchesState } = state
+
       defaultBranch = branchesState.defaultBranch
       currentPullRequest = branchesState.currentPullRequest
     }
+
+    const showRepositoryRemoveDialog = getBoolean(
+      confirmRepoRemovalKey,
+      confirmRepoRemovalDefault
+    )
 
     const labelParameters = getPreferredLabels({
       selectedExternalEditor: this.selectedExternalEditor,
       selectedShell: this.selectedShell,
       defaultBranch,
       currentPullRequest,
+      showRepositoryRemoveDialog,
     })
 
     updatePreferredAppMenuItemLabels(labelParameters)
-  }
-
-  private getBranchesState(repository?: Repository) {
-    if (!repository || !repository.gitHubRepository) {
-      return undefined
-    }
-
-    const state = this.repositoryStateCache.get(repository)
-    return state.branchesState
   }
 
   private updateRepositorySelectionAfterRepositoriesChanged() {

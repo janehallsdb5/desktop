@@ -11,6 +11,7 @@ type PreferredLabelsParameters = {
   readonly defaultBranch: Branch | null
   readonly selectedExternalEditor?: ExternalEditor
   readonly selectedShell?: Shell
+  readonly showRepositoryRemoveDialog: boolean
 }
 
 export function getPreferredLabels({
@@ -18,6 +19,7 @@ export function getPreferredLabels({
   defaultBranch,
   selectedExternalEditor,
   selectedShell,
+  showRepositoryRemoveDialog,
 }: PreferredLabelsParameters): MenuLabels {
   const editorLabel = selectedExternalEditor
     ? `Open in ${selectedExternalEditor}`
@@ -25,11 +27,20 @@ export function getPreferredLabels({
 
   const shellLabel = selectedShell ? `Open in ${selectedShell}` : undefined
 
+  const removeRepositoryLabel = showRepositoryRemoveDialog
+    ? __DARWIN__
+      ? 'Remove...'
+      : '&Remove...'
+    : __DARWIN__
+    ? 'Remove'
+    : '&Remove'
+
   return {
     editorLabel,
     pullRequestLabel: getPullRequestLabel(currentPullRequest),
     shellLabel,
     defaultBranchName: getDefaultBranchName(defaultBranch),
+    removeRepositoryLabel,
   }
 }
 
