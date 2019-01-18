@@ -1444,11 +1444,17 @@ export class AppStore extends TypedBaseStore<IAppState> {
   /**
    * Update menu labels for editor, shell, and pull requests.
    */
-  private updateMenuItemLabels(repository?: Repository) {
+  private updateMenuItemLabels() {
+    const repository = this.selectedRepository
+
     let defaultBranch: Branch | null = null
     let currentPullRequest: PullRequest | null = null
 
-    if (repository != null && repository.gitHubRepository !== null) {
+    if (
+      repository != null &&
+      repository instanceof Repository &&
+      repository.gitHubRepository !== null
+    ) {
       const state = this.repositoryStateCache.get(repository)
       const { branchesState } = state
 
@@ -1926,7 +1932,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     ])
 
     this._updateCurrentPullRequest(repository)
-    this.updateMenuItemLabels(repository)
+    this.updateMenuItemLabels()
     this._initializeCompare(repository)
     this.refreshIndicatorsForRepositories([repository])
   }
@@ -3798,7 +3804,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   public async _refreshPullRequests(repository: Repository): Promise<void> {
     return this.loadPullRequests(repository, async account => {
       await this.pullRequestStore.fetchAndCachePullRequests(repository, account)
-      this.updateMenuItemLabels(repository)
+      this.updateMenuItemLabels()
     })
   }
 
