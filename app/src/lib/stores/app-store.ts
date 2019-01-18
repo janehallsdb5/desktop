@@ -1140,7 +1140,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     repository: Repository,
     previouslySelectedRepository: Repository | CloningRepository | null
   ): Promise<Repository | null> {
-    this._refreshRepository(repository)
+    await this._refreshRepository(repository)
 
     const gitHubRepository = repository.gitHubRepository
 
