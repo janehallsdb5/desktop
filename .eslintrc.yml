@@ -35,10 +35,8 @@ rules:
       typedefs: false
   ## blocked by https://github.com/nzakas/eslint-plugin-typescript/pull/23
   # typescript/member-ordering: error
-  ##
-  ## blocked by https://github.com/nzakas/eslint-plugin-typescript/issues/41
-  # typescript/type-annotation-spacing: error
-  ##
+
+  '@typescript-eslint/type-annotation-spacing': error
 
   # Babel
   babel/no-invalid-this: error
