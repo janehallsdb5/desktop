@@ -51,6 +51,7 @@ rules:
   react/jsx-no-bind: error
   react/no-string-refs: error
   react/jsx-uses-vars: error
+  react/jsx-uses-react: error
 
   ###########
   # BUILTIN #
