@@ -3871,13 +3871,6 @@ eslint-plugin-react@^7.11.1:
     jsx-ast-utils "^2.0.1"
     prop-types "^15.6.2"
 
-eslint-plugin-typescript@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-typescript/-/eslint-plugin-typescript-0.12.0.tgz#e23d58cb27fe28e89fc641a1f20e8d862cb99aef"
-  integrity sha512-2+DNE8nTvdNkhem/FBJXLPSeMDOZL68vHHNfTbM+PBc5iAuwBe8xLSQubwKxABqSZDwUHg+mwGmv5c2NlImi0Q==
-  dependencies:
-    requireindex "~1.1.0"
-
 eslint-rule-composer@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/eslint-rule-composer/-/eslint-rule-composer-0.3.0.tgz#79320c927b0c5c0d3d3d2b76c8b4a488f25bbaf9"
@@ -9227,11 +9220,6 @@ requireindex@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/requireindex/-/requireindex-1.2.0.tgz#3463cdb22ee151902635aa6c9535d4de9c2ef1ef"
   integrity sha512-L9jEkOi3ASd9PYit2cwRfyppc9NoABujTP8/5gFcbERmo5jUoAKovIC3fsF17pkTnGsrByysqX+Kxd2OTNI1ww==
-
-requireindex@~1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/requireindex/-/requireindex-1.1.0.tgz#e5404b81557ef75db6e49c5a72004893fe03e162"
-  integrity sha1-5UBLgVV+91225JxacgBIk/4D4WI=
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
