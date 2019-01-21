@@ -48,6 +48,7 @@ rules:
   react/jsx-key: error
   react/jsx-no-bind: error
   react/no-string-refs: error
+  react/jsx-uses-vars: error
 
   ###########
   # BUILTIN #
