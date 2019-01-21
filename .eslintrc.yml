@@ -1,7 +1,7 @@
 root: true
 parser: '@typescript-eslint/parser'
 plugins:
-  - typescript
+  - '@typescript-eslint'
   - babel
   - react
   - json
@@ -20,13 +20,13 @@ rules:
   # PLUGINS #
   ###########
   # TYPESCRIPT
-  typescript/interface-name-prefix:
+  '@typescript-eslint/interface-name-prefix':
     - error
     - always
-  typescript/no-angle-bracket-type-assertion: error
-  typescript/explicit-member-accessibility: error
-  typescript/no-unused-vars: error
-  typescript/no-use-before-define:
+  '@typescript-eslint/no-angle-bracket-type-assertion': error
+  '@typescript-eslint/explicit-member-accessibility': error
+  '@typescript-eslint/no-unused-vars': error
+  '@typescript-eslint/no-use-before-define':
     - error
     - functions: false
       variables: false
